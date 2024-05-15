@@ -1,0 +1,34 @@
+version: '1.0'
+name: pr-pipeline
+displayName: PRPipeline
+triggers:
+  trigger: auto
+  pr:
+    branches:
+      include:
+        - master
+stages:
+  - name: compile
+    displayName: 编译
+    strategy: naturally
+    trigger: auto
+    steps:
+      - step: build@maven
+        name: build_maven
+        displayName: Maven 构建
+        jdkVersion: '11'
+        mavenVersion: 3.6.1
+        commands:
+          - mvn -B clean package -Dmaven.test.skip=true -f sztu_check
+        artifacts:
+          - name: BUILD_ARTIFACT
+            path:
+              - sztu_check/target
+        strategy: {}
+      - step: publish@general_artifacts
+        name: publish_general_artifacts
+        displayName: 上传制品
+        dependArtifact: BUILD_ARTIFACT
+        artifactName: output
+        strategy: {}
+        dependsOn: build_maven

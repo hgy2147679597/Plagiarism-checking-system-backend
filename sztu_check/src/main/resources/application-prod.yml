@@ -1,0 +1,20 @@
+server:
+  port: 80
+spring:
+  web:
+    resources:
+      static-locations: D:/uploadFile/   #访问系统外部资源，将该目录下的文件映射到系统下
+  datasource:
+    druid:
+      initial-size: 20
+      min-idle: 10
+      max-active: 100
+      url: jdbc:mysql://10.11.155.48:3306/sztu_check?serverTimezone=GMT%2B8&characterEncoding=utf-8
+      username: root
+      password: Root_123
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: 10.11.155.48
+    port: 6379
+    password: 123321
+

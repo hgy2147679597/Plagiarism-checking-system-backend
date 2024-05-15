@@ -1,0 +1,79 @@
+@startuml
+!define TABLE(name) class name << (T,#FFAAAA) >>
+!define CLASS(name) class name << (C,#FFAAAA) >>
+
+package 查重系统{
+
+    TABLE(user) {
+    管理员
+    ==
+    #id int(11) -- 主键/自增
+    name varchar(32) -- 账号
+    password varcha(50) -- 密码
+    create_id int(11) -- 创建人
+    create_by varchar(50) -- 创建人名称
+    create_time timestamp -- 创建时间
+    update_id int(11) -- 更新人
+    update_by varchar(50) -- 更新人名称
+    update_time timestamp -- 更新时间
+    status tinyint -- 状态
+    role   enum('admin','user') --权限
+    ssouid varchar(32) -- 用户认证id
+    is_deleted char(1) -- 逻辑删除字段
+    }
+
+   TABLE(application) {
+       申报
+       ==
+       #id int(11) -- 主键/自增
+       title varchar(50) -- 标题
+       fileId int(11) -- 文件id
+       create_id int(11) -- 创建人
+       create_by varchar(50) -- 创建人名称
+       create_time timestamp -- 创建时间
+       update_id int(11) -- 更新人
+       update_by varchar(50) -- 更新人名称
+       update_time timestamp -- 更新时间
+       status char(1) -- 状态
+       is_deleted char(1) -- 逻辑删除字段
+       }
+
+   TABLE(file) {
+       申报文件
+       ==
+       #id int(11) -- 主键/自增
+       fileUrl varchar(100) -- 文件地址
+       create_id int(11) -- 创建人
+       create_by varchar(50) -- 创建人名称
+       create_time timestamp -- 创建时间
+       update_id int(11) -- 更新人
+       update_by varchar(50) -- 更新人名称
+       update_time timestamp -- 更新时间
+       is_deleted char(1) -- 逻辑删除字段
+       }
+
+   TABLE(log) {
+       操作日志
+       ==
+       #id int(11) -- 主键/自增
+       content varchar(100) -- 内容
+       request_url varchar(100) -- 请求地址
+       request_method varchar(50) -- 请求方式
+       request_pararms varchar(100) -- 请求参数
+       response varchar(100) -- 响应参数
+       create_id int(11) -- 创建人
+       create_by varchar(50) -- 创建人名称
+       create_time timestamp -- 创建时间
+       update_id int(11) -- 更新人
+       update_by varchar(50) -- 更新人名称
+       update_time timestamp -- 更新时间
+       status char(1) -- 状态
+       is_deleted char(1) -- 逻辑删除字段
+       }
+
+}
+
+user "1" -- "*" application
+application "1" -- "*" file
+user "1" -- "*" log
+@enduml

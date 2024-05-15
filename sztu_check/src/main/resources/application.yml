@@ -1,0 +1,54 @@
+logging:
+  config: classpath:logback.xml
+spring:
+  profiles:
+    # 默认激活生产环境
+    active: dev
+    #加载其他配置文件
+    #include: rocketmq
+  jackson:
+    #日期格式化配置
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  servlet:
+    #设置文件上传
+    multipart:
+      enabled: on #是否启用http上传处理
+      max-request-size: 200MB #最大请求文件的大小
+      max-file-size: 100MB #设置单个文件最大长度
+      file-size-threshold: 20MB #当文件达到多少时进行磁盘写入
+  cache:
+    type: redis #采用redis做数据缓存
+
+  main:
+    allow-bean-definition-overriding: true
+
+# MyBatis配置
+mybatis:
+  configuration:
+    #开启驼峰命名匹配映射
+    map-underscore-to-camel-case: on
+    #用于mybatis在控制台打印sql日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  #配置MyBatis的xml映射文件路径
+  mapper-locations: classpath:mapper/*.xml
+  #配置XML映射文件中指定的实体类别名路径
+  type-aliases-package: com.sztu.check.domain
+#设置编码方式，防止日志中文乱码
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.sztu.check.domain
+  db-config:
+    logic-delete-field: is_deleted
+    logic-delete-value: 1
+    logic-not-delete-value: 0
+    configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    context-path: /
+

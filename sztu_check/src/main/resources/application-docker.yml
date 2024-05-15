@@ -1,0 +1,27 @@
+server:
+  port: 8080
+spring:
+  web:
+    resources:
+      static-locations: /app/uploadFile/   #访问系统外部资源，将该目录下的文件映射到系统下
+  datasource:
+    schema: classpath:/schema.sql
+    initialization-mode: always
+    platform: mysql
+    druid:
+      initial-size: 20
+      min-idle: 10
+      max-active: 100
+      url: jdbc:mysql://mysql:3306/sztu_check?serverTimezone=GMT%2B8&characterEncoding=utf-8
+      username: root
+      password: Root_123
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: redis
+    port: 6379
+    password: N#v2W&7Pm@
+custom:
+  pythonPath: python3
+  modelFilePath: /app/model/doc2vec_model.model
+  docxDirectory: /app/uploadFile/
+  pythonScriptPath: /app/scripts/model.py

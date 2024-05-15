@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sztu.check.mapper.ApplicationMapper">
+    <select id="selectPageList" resultType="com.sztu.check.dto.resp.ApplicationRespDTO">
+        select
+	app.id,
+	app.file_id,
+	f.file_url,
+	f.file_name,
+	app.create_id,
+	app.create_user,
+	app.create_time,
+	app.status,
+	app.update_user,
+	app.title,
+	app.update_time
+from
+	sztu_check.application app
+inner join sztu_check.file f on
+	app.file_id = f.id
+	<where>
+		<if test="dto.id != null and dto.id != ''">
+			and app.id = #{dto.id}
+		</if>
+		<if test="dto.title != null and dto.title != ''">
+			and app.title like concat('%', #{dto.title}, '%')
+		</if>
+		<if test="dto.status != null and dto.status != ''">
+			and app.status = #{dto.status}
+		</if>
+		<if test="dto.createId != null and dto.createId != ''">
+			and app.create_id = #{dto.createId}
+		</if>
+		<if test="dto.createUser != null and dto.createUser != ''">
+			and app.create_user like concat('%', #{dto.createUser}, '%')
+		</if>
+		and app.is_deleted = '0'
+		order by app.update_time desc
+	</where>
+    </select>
+</mapper>
